@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_passwordreset',
-   'rest_framework',
+    'rest_framework',
     'rest_framework.authtoken',
     'accounts',
     'django.contrib.sites',
+    'django_rest_passwordreset',
 
 ]
 
@@ -54,6 +54,8 @@ REST_FRAMEWORK = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@yourdomain.com'
+
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 

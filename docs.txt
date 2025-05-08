@@ -12,3 +12,19 @@ POST /api/token/
   "username": "muhammed",
   "password": "secure1234"
 }
+
+POST /api/password_reset/
+{
+  "email": "user@example.com"
+}
+
+POST /api/password_reset/validate_token/
+{
+  "token": "abc123"
+}
+
+POST /api/password_reset/confirm/
+{
+  "token": "abc123",
+  "password": "your_new_password"
+}

@@ -4,6 +4,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('accounts.urls')),
-    path('api/password_reset/', include('rest_passwordreset.urls')),
+    path('api/password_reset/', include('django_rest_passwordreset.urls')),
     
 ]
