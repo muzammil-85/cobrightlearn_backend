@@ -1,0 +1,14 @@
+Api EndPoints
+
+POST /api/register/
+{
+  "username": "muhammed",
+  "email": "muhammed@example.com",
+  "password": "secure1234"
+}
+
+POST /api/token/
+{
+  "username": "muhammed",
+  "password": "secure1234"
+}
