@@ -10,7 +10,8 @@ POST /api/register/
   "age": 25,
   "education_qualification": "B.Tech",
   "phone_number": "9876543210",
-  "course": "Computer Science"
+  "course": "Computer Science",
+  "role": "student"
 }
 
 
@@ -34,4 +35,40 @@ POST /api/password_reset/confirm/
 {
   "token": "abc123",
   "password": "your_new_password"
+}
+
+GET & POST /api/online-classes/
+{
+  "class_name": "Django REST Basics" ,
+  "tutor_name": "Muhammed Muzammil",
+  "course_name": "Web Development",
+  "online_class_link": https://meet.google.com/example,
+  "thumbnail" : file[img],
+}
+
+GET & POST /api/recorded_classes/
+{
+    "class_name": "Python Basics",
+    "tutor_name": "John Doe",
+    "course_name": "Python for Beginners",
+    "thumbnail": File [img],
+    "recorded_class_link": "https://example.com/video"
+}
+
+GET /api/list-students/
+{
+  TOKEN
+}
+
+GET /api/list-tutors/
+{
+  TOKEN
+}
+
+GET & POST /api/courses/
+{
+    "course_name": "Python Basics",
+    "price": "199.99",
+    "duration": "3 months",
+    "description": "Learn the basics of Python."
 }

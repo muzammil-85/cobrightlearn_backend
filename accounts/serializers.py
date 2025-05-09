@@ -1,13 +1,14 @@
 from rest_framework import serializers
-from .models import CustomUser
+from .models import CustomUser, Course
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'age', 'education_qualification', 'phone_number', 'course']
-
+        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'age', 'education_qualification', 'phone_number', 'course', 'role']
+        
+        
     def create(self, validated_data):
         user = CustomUser.objects.create_user(
             username=validated_data['username'],
@@ -19,5 +20,17 @@ class RegisterSerializer(serializers.ModelSerializer):
             education_qualification=validated_data.get('education_qualification'),
             phone_number=validated_data.get('phone_number'),
             course=validated_data.get('course'),
+            role=validated_data.get('role', 'student'),
         )
         return user
+
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'education_qualification', 'phone_number', 'course']
+
+
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = '__all__'

@@ -12,8 +12,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -42,8 +43,14 @@ INSTALLED_APPS = [
     'accounts',
     'django.contrib.sites',
     'django_rest_passwordreset',
+    'onlineclass',
+    'recordclass',
 
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 SITE_ID = 1
 
