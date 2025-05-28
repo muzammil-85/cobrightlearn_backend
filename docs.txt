@@ -15,7 +15,7 @@ POST /api/register/
 }
 
 
-POST /api/token/
+POST /api/login/
 {
   "username": "muhammed",
   "password": "secure1234"

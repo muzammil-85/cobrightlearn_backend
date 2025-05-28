@@ -12,15 +12,17 @@ class RegisterView(generics.CreateAPIView):
 class StudentListView(generics.ListAPIView):
     queryset = CustomUser.objects.filter(role='student')
     serializer_class = UserListSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 class TutorListView(generics.ListAPIView):
     queryset = CustomUser.objects.filter(role='tutor')
     serializer_class = UserListSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
 
 
 class CourseListView(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    permission_classes = [IsAuthenticated]
+    
