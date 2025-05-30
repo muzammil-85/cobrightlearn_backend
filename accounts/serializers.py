@@ -1,33 +1,74 @@
+# serializers.py
 from rest_framework import serializers
-from .models import CustomUser, Course
+from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from accounts.models import Course
+
+User = get_user_model()
+
+class PhoneTokenObtainPairSerializer(TokenObtainPairSerializer):
+    phone_number = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        phone_number = attrs.get("phone_number")
+        password = attrs.get("password")
+
+        try:
+            user = User.objects.get(phone_number=phone_number)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Phone number not found")
+
+        if not user.check_password(password):
+            raise serializers.ValidationError("Incorrect password")
+
+        if not user.is_active:
+            raise serializers.ValidationError("User account is disabled")
+
+        refresh = self.get_token(user)
+
+        return {
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+            "user": {
+                "id": user.id,
+                "phone_number": user.phone_number,
+                "first_name": user.first_name,
+                "role": user.role,
+                "age": user.age,
+                "education_qualification": user.education_qualification,
+                "course": user.course
+            }
+        }
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
-        model = CustomUser
-        fields = ['username', 'email', 'password', 'first_name', 'last_name', 'age', 'education_qualification', 'phone_number', 'course', 'role']
-        
-        
+        model = User
+        fields = [
+            'phone_number', 'password', 'role', 'age', 'education_qualification', 'course', 'email','first_name','last_name'
+        ]
+
+    def validate_phone_number(self, value):
+        if User.objects.filter(phone_number=value).exists():
+            raise serializers.ValidationError("Phone number already registered")
+        return value
+
     def create(self, validated_data):
-        user = CustomUser.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password'],
-            first_name=validated_data.get('first_name', ''),
-            last_name=validated_data.get('last_name', ''),
-            age=validated_data.get('age'),
-            education_qualification=validated_data.get('education_qualification'),
-            phone_number=validated_data.get('phone_number'),
-            course=validated_data.get('course'),
-            role=validated_data.get('role', 'student'),
-        )
+        password = validated_data.pop("password")
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
         return user
 
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'role', 'education_qualification', 'phone_number', 'course']
+        model = User
+        fields = [
+            'id', 'phone_number', 'role', 'age', 'education_qualification', 'course'
+        ]
 
 
 class CourseSerializer(serializers.ModelSerializer):

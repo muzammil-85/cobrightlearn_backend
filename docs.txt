@@ -2,14 +2,13 @@ Api EndPoints
 
 POST /api/register/
 {
-  "username": "johndoe",
-  "email": "john@example.com",
-  "password": "securepassword123",
-  "first_name": "John",
-  "last_name": "Doe",
+  "email": "me@gmail.com",
+  "password": "1234",
+  "first_name": "fname",
+  "last_name": "lname",
   "age": 25,
   "education_qualification": "B.Tech",
-  "phone_number": "9876543210",
+  "phone_number": "1234567890",
   "course": "Computer Science",
   "role": "student"
 }
