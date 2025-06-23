@@ -31,15 +31,10 @@ class PhoneTokenObtainPairSerializer(TokenObtainPairSerializer):
         return {
             "refresh": str(refresh),
             "access": str(refresh.access_token),
-            "user": {
-                "id": user.id,
-                "phone_number": user.phone_number,
-                "first_name": user.first_name,
-                "role": user.role,
-                "age": user.age,
-                "education_qualification": user.education_qualification,
-                "course": user.course
-            }
+            "status": True,
+            "data": None,
+            "err_msg":""
+            
         }
 
 class RegisterSerializer(serializers.ModelSerializer):
